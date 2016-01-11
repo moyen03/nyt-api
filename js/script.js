@@ -43,6 +43,35 @@ function loadData() {
         '</li>');
   }
 
+    }).error(function(e){
+        $nytHeaderElem.text('New York Times article could not be loaded');
+    });
+
+
+ // Your Wikipedia AJAX request goes here
+    var  wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + city + '&format=json&callback=wikiCallback';
+
+    // error handeling
+    var wikiRequestTimeout = setTimeout(function(){
+        $wikiElem.text("Failed to get Wiki resources");
+    }, 9000);
+
+    $.ajax({
+        url: wikiUrl,
+        dataType: "jsonp",
+        // jsonp: "callback",
+        success: function( response ) {
+            var articleList = response[1];
+
+            for (var i = 0; i < articleList.length; i++) {
+                articleStr = articleList[i];
+                var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                $wikiElem.append('<li><a href=" ' + url + ' "> '+
+                    articleStr + '</a></li>');
+            };
+
+            clearTimeout(wikiRequestTimeout);
+        }
     });
 
     return false;
