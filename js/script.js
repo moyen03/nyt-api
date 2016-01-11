@@ -11,8 +11,6 @@ function loadData() {
     $wikiElem.text("");
     $nytElem.text("");
 
-    // load streetview
-
     // YOUR CODE GOES HERE!
     var street = $('#street').val();
     var city = $('#city').val();
@@ -24,7 +22,6 @@ function loadData() {
 
     $body.append('<img class="bgimg" src="'+streetviewUrl+'">');
 
-
     $.getJSON();
 
     var nytJsonUrl = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?';
@@ -32,21 +29,21 @@ function loadData() {
     var nytcompleteUrl = nytJsonUrl + 'q=' + city + '&api-key=' + key + '';
 
     $.getJSON( nytcompleteUrl, function( data ) {
-      $nytHeaderElem.text("New York time articles about the " + city);
-      var allArticles = data.response.docs;
-      for (var i =0; i < allArticles.length; i++) {
+        $nytHeaderElem.text("New York time articles about the " + city);
+        var allArticles = data.response.docs;
+
+        for (var i =0; i < allArticles.length; i++) {
         var eachArticle = allArticles[i];
-
-      $nytElem.append('<li class="eacharticle">'+
+    
+        $nytElem.append('<li class="eacharticle">'+
         '<a href="'+eachArticle.web_url+'">'+eachArticle.headline.main+'</a>'+
-       '<p>'+eachArticle.snippet+'</p>'+
+        '<p>'+eachArticle.snippet+'</p>'+
         '</li>');
-  }
-
+        }
+        
     }).error(function(e){
         $nytHeaderElem.text('New York Times article could not be loaded');
-    });
-
+        });
 
  // Your Wikipedia AJAX request goes here
     var  wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + city + '&format=json&callback=wikiCallback';
@@ -74,7 +71,7 @@ function loadData() {
         }
     });
 
-    return false;
+return false;
 };
 
 $('#form-container').submit(loadData);
