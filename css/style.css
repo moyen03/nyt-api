@@ -23,7 +23,10 @@ body {background-color: #CCC;}
     margin-right: 10px;
     background-color: #666;
 }
-
+#wikipedia-links a {
+    color: #fff;
+    line-height: 2.0em;
+}
 .nytimes-container {
     padding: 10px;
     margin-right:310px;
